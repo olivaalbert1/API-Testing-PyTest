@@ -1,10 +1,17 @@
 import requests
+import time
 
-
-def test_get_pokemon_by_name():
+def test_get_domains():
     #Functionality  testing
-    url = "https://pokeapi.co/api/v2/pokemon/ditto"
+
+    #API URL
+    baseUrl = "https://reqres.in/api"
+    url = baseUrl + "/users?page=2"
+
+    #API call
+    start = time.time()
     response = requests.get(url)
+    roundtrip = time.time() - start
 
     # Verify status code
     assert response.status_code == 200 
@@ -12,8 +19,11 @@ def test_get_pokemon_by_name():
     # Verify content-type
     assert response.headers["Content-Type"] == "application/json; charset=utf-8"
 
-    # Verify response structure (Assuming a book object with 'id', 'title', and 'author')
-    data = response.json()  
-    assert isinstance(data, dict)
-    assert "abilities" in data
-    assert "name" in data
+    # Verify response structure (Assuming a 'total_page' in data and value 2)
+    data = response.json()
+    assert isinstance(data,dict)
+    assert "total_pages" in data
+    assert data["total_pages"] == 2
+
+    # Verify response response time is equal or less than 2ms
+    assert roundtrip <= 2
