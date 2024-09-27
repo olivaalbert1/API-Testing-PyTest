@@ -4,26 +4,27 @@ import time
 def test_get_domains():
     #API URL
     baseUrl = "https://reqres.in/api"
-    url = baseUrl + "/users"
+    url = baseUrl + "/users/1"
+    
     # Read json file
-    file = open('newUser.json','r')
+    file = open('userUpdated.json','r')
     body = file.read()
 
     #API call
-    start = time.time()
-    response = requests.post(url,body)
+    start = time.time()    
+    put_response = requests.put(url,body)
     roundtrip = time.time() - start
 
     # Verify status code
-    assert response.status_code == 201
+    assert put_response.status_code == 200
 
     # Verify content-type
-    assert response.headers["Content-Type"] == "application/json; charset=utf-8"
+    assert put_response.headers["Content-Type"] == "application/json; charset=utf-8"
 
     # Verify response structure (Assuming a 'total_page' in data and value 2)
-    data = response.json()
+    data = put_response.json()
     assert isinstance(data,dict)
-    assert "id" in data
+    assert "updatedAt" in data
 
     # Verify response response time is equal or less than 2ms
     assert roundtrip <= 2
