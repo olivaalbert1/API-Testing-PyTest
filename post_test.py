@@ -1,7 +1,7 @@
 import requests
 import time
 
-def test_get_domains():
+def post_user():
     #API URL
     baseUrl = "https://reqres.in/api"
     url = baseUrl + "/users"
@@ -20,7 +20,7 @@ def test_get_domains():
     # Verify content-type
     assert response.headers["Content-Type"] == "application/json; charset=utf-8"
 
-    # Verify response structure (Assuming a 'total_page' in data and value 2)
+    # Verify response structure (Assuming a 'id' in data)
     data = response.json()
     assert isinstance(data,dict)
     assert "id" in data

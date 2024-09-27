@@ -1,7 +1,7 @@
 import requests
 import time
 
-def test_get_domains():
+def get_users():
     #Functionality  testing
 
     #API URL
